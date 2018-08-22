@@ -2,6 +2,10 @@ App = {
     web3Provider: null,
     contracts: {},
     account: '0x0',
+    loading: false,
+    tokenPrice: 1000000000000000,
+    tokensSold: 0,
+    tokensAvailable: 750000,
     init: function() {
         console.log("initialized....")
         return App.initWeb3();
@@ -31,7 +35,7 @@ App = {
                 App.contracts.CashFinex = TruffleContract(CashFinex);
                 App.contracts.CashFinex.setProvider(App.web3Provider);
                 App.contracts.CashFinex.deployed().then(function(CashFinex){
-                  console.log("TokenAddress", CashFinex.address);
+                  console.log(CashFinex);
                 });
                 return App.render();
           });
@@ -40,14 +44,53 @@ App = {
   },
 
   render: function() {
+    if(App.loading){
+      return;
+    }
+    App.loading = true;
+    var loader = $('#loader');
+    var content = $('#content');
+
+    loader.show();
+    content.hide();
     web3.eth.getCoinbase(function(err, account){
       if(err === null ){
         App.account = account;
         console.log("Account=" +  account);
         $('#accountAddress').html("Your Account:"+ account);
       }
+    })
+
+    App.contracts.DappTokenSale.deployed().then(function(instance){
+        dappTokenSaleIntance = instance;
+        console.log(dappTokenSaleIntance);
+        return dappTokenSaleIntance.tokenPrice();
+    }).then(function(tokenPrice){
+          App.tokenPrice = tokenPrice;
+          $('.tokenPrice').html(web3.fromWei(tokenPrice,'ether').toNumber());
+          return dappTokenSaleIntance.tokensSold();
+    }).then(function(tokensSold){
+          App.tokensSold = tokensSold.toNumber();
+          $('.tokens-sold').html(App.tokensSold);
+          $('.tokens-available').html(App.tokensAvailable);
+
+          var progressPercent = (App.tokensSold / App.tokensAvailable) * 100;
+          $('#progress').css('width', progressPercent, '%');
+
+          App.contracts.CashFinex.deployed().then(function(instance){
+              CashFinex = instance;
+              return CashFinex.balanceOf(App.account);
+          }).then(function(balance){
+                bal = balance.toNumber();
+                $('.dapp-balance').html(bal);
+                App.loading = false;
+                loader.hide();
+                content.show();
+          });
+
     });
-  }
+
+    }
 };
 
 $(function(){
