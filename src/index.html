@@ -1,0 +1,54 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  </head>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<body>
+    <div class="container" style="width: 650px;">
+
+        <div class="row">
+                <div class="col-lg-12">
+                        <h1 class="text-center">CashFinex ICO Sale</h1>
+                        <hr>
+                        <br>
+                </div>
+                <div id="loader" class="text-center">
+                  <p class="text-center">Loading...</p>
+                </div>
+
+                <div id="content" class="text-center col-lg-12">
+                    <p>Decentralized Token  , the token price is <span class="tokenPrice"></span>.you have the <span class="dapp-balance"></span></p>
+                <br/>
+                <form  role="form">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <input type="number" class="form-control input-lg" id="numberOfToken" name="notoken" value="1" min="1" pattern="[0-9]">
+                        </input>
+                        <span class="input-class-btn">
+                            <button type="submit" class="btn btn-primary btn-lg">Buy Token</button>
+                        </span>
+                        </div>
+                    </div>
+                </form>
+                <div class="progress">
+                    <div id="progress" class="progress-bar progress-bar-striped active" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+
+                </div>
+                <p><span class="tokens-sold"></span>/<span class="token-available"></span>token sold</p>
+                <p id="accountAddress"></p>
+            </div>
+        </div>
+    </div>
+
+    <script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-min.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>

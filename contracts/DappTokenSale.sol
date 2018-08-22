@@ -4,7 +4,7 @@ pragma solidity ^0.4.23;
 import "./CashFinex.sol";
 
 contract DappTokenSale {
-    
+
     address admin;
     CashFinex public tokenContract;
     uint256 public tokenPrice;
@@ -16,7 +16,7 @@ contract DappTokenSale {
         admin = msg.sender;
         tokenContract = _tokenContract;
         tokenPrice = _tokenPrice;
-       
+
     }
 
     function multiply(uint x, uint y) internal pure returns (uint z) {
@@ -33,5 +33,5 @@ contract DappTokenSale {
         emit Sell(msg.sender, _numberOfTokens);
     }
 
-    
+
 }
