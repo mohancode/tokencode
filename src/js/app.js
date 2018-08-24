@@ -37,11 +37,24 @@ App = {
                 App.contracts.CashFinex.deployed().then(function(CashFinex){
                   console.log(CashFinex);
                 });
+                App.listenForEvents();
                 return App.render();
           });
 
     })
   },
+  listenForEvents: function() {
+    App.contracts.DappTokenSale.deployed().then(function(instance) {
+      instance.Sell({}, {
+        fromBlock: 0,
+        toBlock: 'latest',
+      }).watch(function(error, event) {
+        console.log("event triggered", event);
+        App.render();
+      })
+    })
+  },
+
 
   render: function() {
     if(App.loading){
@@ -68,6 +81,7 @@ App = {
     }).then(function(tokenPrice){
           App.tokenPrice = tokenPrice;
           $('.tokenPrice').html(web3.fromWei(tokenPrice,'ether').toNumber());
+
           return dappTokenSaleIntance.tokensSold();
     }).then(function(tokensSold){
           App.tokensSold = tokensSold.toNumber();
@@ -79,6 +93,12 @@ App = {
 
           App.contracts.CashFinex.deployed().then(function(instance){
               CashFinex = instance;
+              return CashFinex.name();
+            }).then(function(name){
+              $('.tokenName').html(name);
+              return CashFinex.symbol();
+            }).then(function(symbol){
+              $('.tokenSymbol').html(symbol);
               return CashFinex.balanceOf(App.account);
           }).then(function(balance){
                 bal = balance.toNumber();
@@ -90,7 +110,26 @@ App = {
 
     });
 
-    }
+    },
+
+    buyTokens: function() {
+    $('#content').hide();
+    $('#loader').show();
+    var numberOfTokens = $('#numberOfToken').val();
+    App.contracts.DappTokenSale.deployed().then(function(instance) {
+      console.log("token="+ numberOfTokens);
+      console.log(App.account);
+      return instance.buyTokens(numberOfTokens, {
+        from: App.account,
+        value: numberOfTokens * App.tokenPrice,
+        gas: 500000 // Gas limit
+      });
+    }).then(function(result) {
+      console.log("Tokens bought...")
+      $('form').trigger('reset') // reset number of tokens in form
+      // Wait for Sell event
+    });
+  }
 };
 
 $(function(){

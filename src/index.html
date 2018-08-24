@@ -21,8 +21,9 @@
 
                 <div id="content" class="text-center col-lg-12" style="display:none;">
                     <p>Decentralized Token  , the token price is <span class="tokenPrice"></span>.you have the <span class="dapp-balance"></span></p>
+                    <p> TOKEN NAME : <span class="tokenName"></span> TOKEN SYMBOL : <span class="tokenSymbol"></span></p>
                 <br/>
-                <form  role="form">
+                <form onSubmit="App.buyTokens(); return false;" role="form">
                     <div class="form-group">
                         <div class="input-group">
                         <input type="number" class="form-control input-lg" id="numberOfToken" name="notoken" value="1" min="1" pattern="[0-9]">
