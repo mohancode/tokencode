@@ -91,14 +91,9 @@ App = {
           var progressPercent = (App.tokensSold / App.tokensAvailable) * 100;
           $('#progress').css('width', progressPercent, '%');
 
-          App.contracts.CashFinex.deployed().then(function(instance){
-              CashFinex = instance;
-              return CashFinex.name();
-            }).then(function(name){
-              $('.tokenName').html(name);
-              return CashFinex.symbol();
-            }).then(function(symbol){
-              $('.tokenSymbol').html(symbol);
+          App.contracts.CashFinex.deployed().then(function(i){
+              CashFinex = i;
+              console.log(CashFinex);
               return CashFinex.balanceOf(App.account);
           }).then(function(balance){
                 bal = balance.toNumber();
@@ -125,6 +120,7 @@ App = {
         gas: 500000 // Gas limit
       });
     }).then(function(result) {
+      console.log("result"+result);
       console.log("Tokens bought...")
       $('form').trigger('reset') // reset number of tokens in form
       // Wait for Sell event

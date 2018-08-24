@@ -20,6 +20,12 @@ module.exports = {
       host: "localhost",
       port: 7545,
       network_id: "5777"
+    },
+    rinkeby: {
+      host: "localhost",
+      port: 8545,
+      network_id: "4",
+      gas: 470000
      }
   }//https://ropsten.infura.io/v3/1daba21cfd7a4d9a8773600e943db915
 };
