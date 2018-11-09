@@ -3,9 +3,9 @@ pragma solidity ^0.4.23;
 contract CashFinex {
 
     uint256 public totalSupply;
-    string public name = "CashFinex Token";
-    string public symbol = "CFT";
-    string public standard = "CashFinex Token v1.0";
+    string public name = "Alwin Token";
+    string public symbol = "ALT";
+    string public standard = "Alwin Token v1.0";
     uint256 public decimals = 18;
 
   event Transfer(address indexed from, address indexed to, uint256 value);
